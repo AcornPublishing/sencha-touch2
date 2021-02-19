@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Cordova</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="childbrowser.js"></script>
+
+<script language="javascript">
+
+function showPlugin(){
+	 window.plugins.childBrowser.showWebPage("http://www.google.com", { showLocationBar: true });
+}		
+</script>
+</head>
+<body>
+<h1>PhoneGap Plugin</h1>
+<BR>
+<BR>
+<a href="javascript:showPlugin()">새로운 창을 띄웁니다.</a>
+</body>
+</html>

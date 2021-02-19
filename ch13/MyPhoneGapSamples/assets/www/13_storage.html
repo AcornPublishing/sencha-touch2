@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Storage Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 폰갭을 준비함
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // 테이블을 생성하고 데이터를 입력한다.
+    function populateDB(tx) {
+        tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+    }
+
+    // 테이블을 질의한다.
+    function queryDB(tx) {
+        tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+    }
+
+    // 정상적일 경우 해당 데이터를 가져온다.
+    function querySuccess(tx, results) {
+    	var element = document.getElementById("database");
+        var len = results.rows.length;
+        var str="";
+        for (var i=0; i<len; i++){ 
+            str = str + "Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data + "<br>";
+        }
+        element.innerHTML = str;
+    }
+
+    // 에러가 발생할 경우
+    function errorCB(err) {
+        console.log("Error processing SQL: "+err.code);
+    }
+
+    // 정상적일 경우
+    function successCB() {
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(queryDB, errorCB);
+    }
+
+    // 폰갭이 준비되면 데이터베이스를 열고 질의한다.
+    function onDeviceReady() {
+    	
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);        
+        db.transaction(populateDB, errorCB, successCB);        
+    }
+
+    </script>
+  </head>
+  <body>
+    <h1>Database</h1>
+    <div id="database"></div>
+  </body>
+</html>

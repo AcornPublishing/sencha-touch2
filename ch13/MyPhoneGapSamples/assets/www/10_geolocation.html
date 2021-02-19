@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Device Properties Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 폰갭을 준비한다.
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // 폰갭이 준비되면 위치정보를 호출한다.
+    function onDeviceReady() {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+
+    // 위치정보를 읽어와 화면에 보여준다.
+    function onSuccess(position) {
+        var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br/>' +
+                            'Longitude: ' + position.coords.longitude + '<br/>' +
+                            'Altitude: ' + position.coords.altitude + '<br/>' +
+                            'Accuracy: ' + position.coords.accuracy+ '<br/>' +
+                            'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br/>' +
+                            'Heading: '+ position.coords.heading+ '<br/>' +
+                            'Speed: ' + position.coords.speed + '<br/>' +
+                            'Timestamp: ' + position.timestamp + '<br/>';
+    }
+
+    // 에러 이벤트
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+
+    </script>
+  </head>
+  <body>
+    <p id="geolocation">Finding geolocation...</p>
+  </body>
+</html>

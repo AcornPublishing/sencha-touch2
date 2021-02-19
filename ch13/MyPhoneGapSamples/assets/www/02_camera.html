@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Capture Photo</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
+
+    // 폰갭 준비
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // 폰갭이 준비되면 호출됨
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+
+    // 사진데이터를 정상적으로 받을 경우 
+    function onPhotoDataSuccess(imageData) {
+      // 화면의 이미지 ID를 읽어옴
+      var smallImage = document.getElementById('smallImage');
+      smallImage.style.display = 'block';
+      // 화면의 이미지를 Base64로 설정하여 보여줌
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoURISuccess(imageURI) {
+      // Uncomment to view the image file URI 
+      // console.log(imageURI);
+
+      // Get image handle
+      //
+      var largeImage = document.getElementById('largeImage');
+
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      largeImage.src = imageURI;
+    }
+
+ 	// 사진을 캡쳐하는 메소드
+    function capturePhoto() {
+      // 사진을 찍고 사진을 보여줌. 
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL });
+    }
+
+	// 수정가능한 사진을 호출하는 메소드 
+    function capturePhotoEdit() {
+      // 사진을 찍고 수정할 수 있는 사진을 보여줌.   
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    // 해당 사진을 가져오는 메소드 
+    function getPhoto(source) {
+      // 사진을 가져오는 메소드 
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+
+    // 오류가 발생하면 호출되는 메소드  
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+    </script>
+  </head>
+  <body>
+    <button onclick="capturePhoto();">Capture Photo</button> <br>
+    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;" id="largeImage" src="" />
+  </body>
+</html>

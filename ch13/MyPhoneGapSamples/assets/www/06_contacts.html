@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 폰갭의 준비에 기다린다. 
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // 폰갭이 준비되면 전화번호를 조회해 온다. 
+    function onDeviceReady() {
+        var options = new ContactFindOptions();
+        options.filter="";
+        options.multiple=true;
+        filter = ["displayName","phoneNumbers"];
+        navigator.contacts.find(filter, onSuccess, onError, options);
+    }
+  
+    
+    // 전화버호를 성공적으로 가져왔을 때 수행할 메소드 이다. 
+    function onSuccess(contacts) {
+        var str="";
+		try
+		{
+	        for (var i=0; i<contacts.length; i++) {
+	        	try
+	        	{
+	            for (var j=0; j<contacts[i].phoneNumbers.length; j++) {
+	                try
+    				{
+    					   //if(contacts[i].phoneNumbers[j].pref == true)
+	                		{
+
+							str = str + contacts[i].phoneNumbers[j].type + ":" + 
+										contacts[i].phoneNumbers[j].value + "<br/>";
+						
+						}   
+					}catch(e){ console.log(e);}  
+	            }
+	            }catch(e){ console.log(e);}
+	        }
+	    }catch(e){ console.log(e);}
+        
+        document.getElementById('phonelist').innerHTML = str;
+    };
+
+    // 에러발생시 호출할 메소드 이다.
+    function onError(contactError) {
+        alert('onError!');
+    }
+    </script>
+  </head>
+  <body>
+    <h1>Example</h1>
+    <p>Find Contacts</p>
+    <div id="phonelist">Contacts</div>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Compass Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // The watch id  나침반 방향을 감시
+    var watchID = null;
+
+    // 폰갭 로딩을 기다림
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // 폰갭 준비완료
+    function onDeviceReady() {
+        startWatch();
+    }
+
+    // 감시를 시작함
+    function startWatch() {
+
+        var options = { frequency: 300 };
+        watchID = navigator.compass.watchHeading(onSuccess, onError, options);
+    }
+
+    // 감시를 종료함
+    function stopWatch() {
+        if (watchID) {
+            navigator.compass.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+
+	// 성공시 화면에 출력
+    function onSuccess(heading) {
+        var element = document.getElementById('heading');
+        element.innerHTML = 'Heading: ' + heading.magneticHeading;
+    }
+
+    // 실패시 에러 출력
+    function onError(compassError) {
+        alert('Compass error: ' + compassError.code);
+    }
+
+    </script>
+  </head>
+  <body>
+    <div id="heading">Waiting for heading...</div>
+    <button onclick="startWatch();">Start Watching</button>
+    <button onclick="stopWatch();">Stop Watching</button>
+  </body>
+</html>

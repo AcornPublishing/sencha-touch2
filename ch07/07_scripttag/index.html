@@ -1,0 +1,30 @@
+﻿<html>
+    <head>
+        <script language="javascript">
+        function callScriptTag()
+        {
+            var myHead = document.getElementsByTagName("head").item(0);
+            var myScript = document.createElement("script");
+            myScript.setAttribute("type", "text/javascript");
+            myScript.setAttribute("src", "./target.jsp");           
+            console.log(myScript.getAttribute("src"));
+            myHead.appendChild(myScript);       
+            console.log(myHead);
+        }
+        function callScriptTagFunc()
+        {
+            var returnValue = serverFunc();
+            console.log(document.getElementById("result"));
+            document.getElementById("result").value=returnValue;
+        }   
+        </script>
+    </head>
+    
+    <body onload="javascript:callScriptTag();">
+        <center><BR><BR>
+        <a href="javascript:callScriptTagFunc()">ScriptTag 가져오기</a>
+        <br>
+        <br>
+        <input text="text" id="result">
+    </body>
+</html>

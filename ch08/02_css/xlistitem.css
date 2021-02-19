@@ -1,0 +1,10 @@
+
+  
+.x-list .x-list-item {
+  position: relative;
+  color: blue;
+  background: lightBlue;
+  -webkit-border-radius: 2em;
+  border-radius: 2em;
+
+}

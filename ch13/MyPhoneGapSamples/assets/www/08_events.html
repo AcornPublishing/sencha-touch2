@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                      "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Cordova Volume Up Button Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 폰갭의 준비상태 체크
+    function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    // 폰갭이 준비되면 메뉴버튼과 뒤로가기 버튼 이벤트를 잡아낸다.
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("menubutton", onMenuButton, false);
+        document.addEventListener("backbutton", onBackButton, false);
+    }
+
+    // 메뉴버튼이 눌렸을 때 알림창을 띙운다. 메뉴버튼은 나타나지 않는다.
+    function onMenuButton() {
+    	alert('MENU BUTTON');
+    }
+    
+    // 뒤로가기 버튼이 눌렸을 때 알림창을 띄운다. 뒤로가기는 실행되지 않는다.
+    function onBackButton() {
+    	alert('BACK BUTTON');
+    }
+    </script>
+  </head>
+  <body onload="onLoad()">
+  	<a href="index.html">리스트로</a>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Acceleration Example</title>
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 감시할수 있는 watchID를 선언한다.
+    var watchID = null;
+
+    // 폰갭이 준비되었는지 확인한다.
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // 폰갭이 준비됨. 
+    function onDeviceReady() {
+        var element = document.getElementById('accelerometer');
+        element.innerHTML = 'Device Ready';
+        startWatch();
+    }
+
+    // 가속도기를 생성하고 감시한다.
+    function startWatch() {
+
+        // 0.3초마다 체크한다.
+        var options = { frequency: 300 };
+        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+    }
+    // 감시기를 종료한다.
+    function stopWatch() {
+        if (watchID) {
+            navigator.accelerometer.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+    // 가속도기의  결과를 받는다.
+    function onSuccess(acceleration) {
+        var element = document.getElementById('accelerometer');
+        element.innerHTML = 'Acceleration X: ' + acceleration.x + '<br />' +
+                            'Acceleration Y: ' + acceleration.y + '<br />' +
+                            'Acceleration Z: ' + acceleration.z + '<br />' +
+                            'Timestamp: '      + acceleration.timestamp + '<br />';
+    }
+    // 에러를 처리한다.
+    function onError() {
+        alert('onError!');
+    }
+    </script>
+  </head>
+  <body>
+    <div id="accelerometer">Waiting for accelerometer...</div>
+  </body>
+</html>
